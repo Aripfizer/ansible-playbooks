@@ -1,6 +1,6 @@
 - name: run script 
   hosts: virtualmachines
-  remote_user: aripfizer
+#  remote_user: aripfizer
   tasks:
    - name: Compter le nombre de fichier et de dossier du dossier /home/data
      ansible.builtin.script: scripts/compte.sh
