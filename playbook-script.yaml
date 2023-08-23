@@ -1,0 +1,20 @@
+- name: run script 
+  hosts: virtualmachines
+  remote_user: aripfizer
+  tasks:
+   - name: Compter le nombre de fichier et de dossier du dossier /home/data
+     ansible.builtin.script: scripts/compte.sh
+     register: script1_output
+
+   - name: Afficher la sortie du script 1
+     ansible.builtin.debug:
+       var: script1_output.stdout_lines
+   
+   - name: Afficher le contenu du dossier /home/data
+     ansible.builtin.script: scripts/list.sh
+     register: script2_output
+
+   - name: Afficher la sortie du script 2
+     ansible.builtin.debug:
+       var: script2_output.stdout_lines
+
