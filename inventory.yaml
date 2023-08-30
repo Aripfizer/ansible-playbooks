@@ -1,0 +1,11 @@
+descmachines:
+  hosts:
+    vm01:
+      ansible_host: 172.22.67.134
+      ansible_user: aripfizer
+  vars:
+    lastname: DOE
+    firstname: John
+    email: johndoe@gmail.com
+    age: 22
+    sexe: Masculin

@@ -1,0 +1,10 @@
+- name: Decrire un utilisateur
+  hosts: descmachines
+  tasks:
+   - name: Decription de l'utilisateur
+     ansible.builtin.script: scripts/helloworld.sh "{{ lastname }}" "{{ firstname }}" "{{ email }}" "{{ age }}" "{{ sexe }}"
+     register: script_output
+
+   - name: Afficher la sortie du script
+     ansible.builtin.debug:
+       var: script_output.stdout_lines
