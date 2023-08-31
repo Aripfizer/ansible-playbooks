@@ -45,5 +45,7 @@
        to: Ariel DOSSOU <arieldossou00@gmail.com>, Pio ELEGBEDE <elegbedepio@gmail.com>
        cc: Charlie Root <root@localhost>
        subject: "Monitoring"
-       body: "Aucun fichier correspondant trouvé dans le répertoire {{ target_directory }}"
+       body: "{{ lookup('template','templates/email.html.j2') }}"
+       subtype: html
+       charset: utf8
      when: nb_fichiers|int == 0  

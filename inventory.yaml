@@ -5,5 +5,7 @@ virtualmachines:
       ansible_user: aripfizer
   vars:
     target_directory: /home/aripfizer/prod_data
-    intervalle_seconds: 120
-    
+    intervalle_seconds: 120    
+    email_subject: Monitoring
+    email_content: "Aucun fichier correspondant trouvé dans le répertoire {{ target_directory }}"
+    front_url: https://google.com
