@@ -1,0 +1,9 @@
+virtualmachines:
+  hosts:
+    vm01:
+      ansible_host: 172.22.67.134
+      ansible_user: aripfizer
+  vars:
+    target_directory: /home/aripfizer/prod_data
+    intervalle_seconds: 120
+    
