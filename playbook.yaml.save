@@ -1,0 +1,50 @@
+- name: Monitoré un repertoire 
+  hosts: virtualmachines
+  vars_files:
+    - vaults/smtp.yaml
+  tasks:
+   - name: Vérifier que le répertoire existe
+     stat:
+       path: "{{ target_directory }}"
+     register: stat_directory
+
+   - name: Afficher un message d'erreur si le répertoire n'existe pas
+     fail:
+       msg: "Le répertoire {{ target_directory }} n'existe pas"
+     when: not stat_directory.stat.exists
+
+   - name: Trouver les fichiers créés dans les 2 dernières minutes
+     find:
+       paths: "{{ target_directory }}"
+       patterns: '*.txt'
+       age: "-{{ intervalle_seconds }}s"
+       recurse: yes
+     register: recent_files
+
+   - name: Vérifier le nombre de fichiers trouvés
+     set_fact:
+       nb_fichiers: "{{ recent_files.files | length }}"
+   
+   - name: Afficher les infos des fichiers si > 0
+     debug:
+       msg: 
+         - "Fichier trouvé : {{ item.path }}"
+         - "Nom : {{ item.path | basename }}"
+         - "Taille : {{ (item.size/1024/1024) | round(2) }} Mo"
+         - "Date création : {{ '%d/%m/%Y - %H:%M:%S' | strftime(item.mtime) }}"
+     loop: "{{ recent_files.files }}"
+     when: nb_fichiers|int > 0
+   
+   - name: Envoyer un email si aucun fichier
+     mail:
+       host: "{{host}}"
+       port: "{{port}}"
+       username: "{{username}}"
+       password: "{{password}}"
+       from: admin@ansible.bj (Ansible Support)
+       to: Ariel DOSSOU <arieldossou00@gmail.com>, Pio ELEGBEDE <elegbedepio@gmail.com>
+       cc: Charlie Root <root@localhost>
+       subject: "Monitoring"
+       body: "{{ lookup('template','templates/email.html.j2') }}"
+       "{{ lookup('template','templates/mail_body.html.j2') }}"
+     when: nb_fichiers|int == 0  
