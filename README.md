@@ -3,4 +3,4 @@
 
   ansible-playbook -i inventory.yaml playbook.yaml --ask-vault-pass
 
-This command ask vault password : 1234
+This command ask vault password
