@@ -1,7 +1,6 @@
 - name: Deploy ansible & ansible-semaphore 
   hosts: virtualmachines
   become: true
-  become_user: aripfizer
   tasks:
     - name: Vérifier si Ansible est déjà installé
       ansible.builtin.stat:
@@ -12,6 +11,7 @@
       apt:
         update_cache: yes
       changed_when: false
+      register: apt_update_log
       when: not ansible_installed.stat.exists
 
     - name: Installer les dépendances d'Ansible
@@ -26,10 +26,11 @@
     - name: Ajouter le repository Ansible
       ansible.builtin.apt_repository:
         repo: ppa:ansible/ansible
+      register: ansible_repo
       when: 
         - not ansible_installed.stat.exists
         - install_dependencies.changed
-
+  
     - name: Installer Ansible
       ansible.builtin.apt:
         name: ansible
@@ -42,9 +43,7 @@
       changed_when: false
       register: ansible_version_result
 
+    # LOG
     - name: Afficher la version d'Ansible installée
       ansible.builtin.debug:
         msg: "Ansible version installée : {{ ansible_version_result.stdout }}"
-      # when: 
-      #   - not ansible_installed.stat.exists
-      #   - install_ansible.changed
