@@ -42,8 +42,8 @@
        username: "{{username}}"
        password: "{{password}}"
        from: admin@ansible.bj (Ansible Support)
-       to: Ariel DOSSOU <arieldossou00@gmail.com>, Pio ELEGBEDE <elegbedepio@gmail.com>
-       cc: Charlie Root <root@localhost>
+       to: "{{  email_to }}"
+       cc: "{{ email_cc }}"
        subject: "Monitoring"
        body: "{{ lookup('template','templates/email.html.j2') }}"
        subtype: html
