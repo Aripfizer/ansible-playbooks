@@ -9,3 +9,4 @@ virtualmachines:
     email_subject: Monitoring
     email_content: "Aucun fichier correspondant trouvé dans le répertoire {{ target_directory }}"
     front_url: https://google.com
+    file_pattern:  '*.txt'
