@@ -34,6 +34,31 @@
          - "Date création : {{ '%d/%m/%Y - %H:%M:%S' | strftime(item.mtime) }}"
      loop: "{{ recent_files.files }}"
      when: nb_fichiers|int > 0
+
+   - name: Récupérer les fichiers conformément au pattern
+     find:
+       paths: "{{ target_directory }}"
+       patterns: "{{ file_pattern }}"
+     register: found_files
+     when: nb_fichiers|int == 0
+
+   - name: Trier les fichiers par date de modification
+     set_fact:
+       sorted_files: "{{ found_files.files|sort(attribute='mtime') }}"
+     when: nb_fichiers|int == 0
+   
+   - name: Récupérer le dernier fichier
+     set_fact:
+       last_added_file: "{{ sorted_files|last }}"
+     when: nb_fichiers|int == 0
+
+   - name: Extraire les infos du dernier fichier dans des variables 
+     set_fact:
+       last_file_path: "{{ last_added_file.path }}"
+       last_file_name: "{{ last_added_file.path | basename }}"
+       last_file_date: "{{ '%d/%m/%Y - %H:%M:%S' | strftime(last_added_file.mtime) }}"
+       last_file_size: "{{ (last_added_file.size/1024/1024) | round(2) }}"
+     when: nb_fichiers|int == 0
    
    - name: Envoyer un email si aucun fichier
      mail:
