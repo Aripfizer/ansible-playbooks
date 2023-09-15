@@ -11,11 +11,11 @@ virtualmachines:
     # PLAYBOOK VARS
     target_directory: /home/aripfizer/prod_data
     intervalle_seconds: 120    
+    
+    # EMAIL CONFIG
     email_subject: Monitoring
     front_url: https://google.com
     file_pattern:  '*.txt'
-
-    # EMAIL CONFIG
     email_to: "Ariel LePotentiel <ariellepotentiel@gmail.com>, Pio ELEGBEDE <elegbedepio@gmail.com>"
     email_cc: "Charlie Root <monc@cc.com>"
     email_content: "Aucun fichier correspondant: {{ file_pattern }} n'a été ajouté dans le répertoire {{ target_directory }} depuis le dernier fichier: \n path: {{ last_file_path}} \n nom: {{ last_file_name }} \n taille: {{ last_file_size }} Mo \n date: {{ last_file_date }}"
