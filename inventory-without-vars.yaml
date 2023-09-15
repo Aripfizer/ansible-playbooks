@@ -1,6 +1,6 @@
 virtualmachines:
   hosts:
     vm01:
-      ansible_host: 172.22.67.134
-      ansible_user: aripfizer
+      ansible_host: {{ machine_ip }}
+      ansible_user: {{ machine_user }}
 

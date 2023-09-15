@@ -1,14 +1,27 @@
 virtualmachines:
   hosts:
     vm01:
-      ansible_host: 172.22.67.134
-      ansible_user: aripfizer
+      ansible_host: "{{ machine_ip }}"
+      ansible_user: "{{ machine_user }}"
   vars:
+    # HOST CONFIG
+    machine_ip: 172.22.67.134
+    machine_user: aripfizer
+
+    # PLAYBOOK VARS
     target_directory: /home/aripfizer/prod_data
     intervalle_seconds: 120    
     email_subject: Monitoring
     front_url: https://google.com
     file_pattern:  '*.txt'
+
+    # EMAIL CONFIG
     email_to: "Ariel LePotentiel <ariellepotentiel@gmail.com>, Pio ELEGBEDE <elegbedepio@gmail.com>"
     email_cc: "Charlie Root <monc@cc.com>"
     email_content: "Aucun fichier correspondant: {{ file_pattern }} n'a été ajouté dans le répertoire {{ target_directory }} depuis le dernier fichier: \n path: {{ last_file_path}} \n nom: {{ last_file_name }} \n taille: {{ last_file_size }} Mo \n date: {{ last_file_date }}"
+    
+    # SMTP CONFIG
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: 35ad4dde86d934
+    password: 76925293f718c5

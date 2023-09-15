@@ -1,7 +1,5 @@
 - name: Monitoré un repertoire 
   hosts: virtualmachines
-  vars_files:
-    - vaults/smtp.yaml
   tasks:
    - name: Vérifier que le répertoire existe
      stat:
